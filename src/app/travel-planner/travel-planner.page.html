@@ -1,0 +1,175 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>travel-planner</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container mx-auto p-4 max-w-6xl">
+    <h1 class="text-3xl font-bold mb-8 text-center">
+      Planification de Séjour Optimisée
+    </h1>
+
+    <!-- Formulaire de recherche -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-bold mb-6">Rechercher un séjour</h2>
+
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <!-- Départ -->
+          <div>
+            <label class="block text-sm font-medium mb-2"> Départ </label>
+            <input
+              type="text"
+              formControlName="departure"
+              class="w-full p-2 border rounded"
+              placeholder="Ville de départ"
+            />
+          </div>
+
+          <!-- Destination -->
+          <div>
+            <label class="block text-sm font-medium mb-2"> Destination </label>
+            <input
+              type="text"
+              formControlName="destination"
+              class="w-full p-2 border rounded"
+              placeholder="Ville de destination"
+            />
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-2"> Dates du séjour </label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="date"
+              formControlName="startDate"
+              class="w-full p-2 border rounded"
+            />
+            <input
+              type="date"
+              formControlName="endDate"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+        </div>
+
+        <!-- Priorités -->
+        <div class="space-y-6 mb-6">
+          <h3 class="font-medium">Définissez vos priorités</h3>
+
+          <!-- Prix -->
+          <div>
+            <label class="block text-sm font-medium mb-2"> Prix </label>
+            <input
+              type="range"
+              formControlName="priceImportance"
+              class="w-full"
+              min="0"
+              max="100"
+            />
+          </div>
+
+          <!-- Temps -->
+          <div>
+            <label class="block text-sm font-medium mb-2">
+              Temps de trajet
+            </label>
+            <input
+              type="range"
+              formControlName="timeImportance"
+              class="w-full"
+              min="0"
+              max="100"
+            />
+          </div>
+
+          <!-- Impact environnemental -->
+          <div>
+            <label class="block text-sm font-medium mb-2">
+              Impact environnemental
+            </label>
+            <input
+              type="range"
+              formControlName="carbonImportance"
+              class="w-full"
+              min="0"
+              max="100"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+        >
+          Rechercher les meilleures options
+        </button>
+      </form>
+    </div>
+
+    <!-- Résultats -->
+    <div
+      class="space-y-4"
+      *ngIf="travelOptions && travelOptions.length > 0"
+    ></div>
+    <h2 class="text-xl font-bold mb-4">Meilleures options de séjour</h2>
+
+    <div
+      *ngFor="let option of travelOptions"
+      class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+    >
+      <!-- Transport -->
+      <div class="mb-6">
+        <h3 class="font-medium mb-4">Transport</h3>
+        <div class="space-y-4">
+          <div *ngFor="let segment of option.segments" class="flex items-center">
+            <!-- Icône du transport -->
+            <span class="mr-2">
+              {{ segment.type === 'train' ? '🚂' : '✈️' }}
+            </span>
+            <!-- Trajet -->
+            <span>{{ segment.from }}</span>
+            <span class="mx-2">→</span>
+            <span>{{ segment.to }}</span>
+            <!-- Durée -->
+            <span class="ml-4 text-gray-600">({{ segment.duration }})</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logement -->
+      <div class="mb-6">
+        <h3 class="font-medium mb-4">Hébergement</h3>
+        <div class="flex items-center">
+          <span class="mr-2">
+            {{ option.accommodation.type === 'hotel' ? '🏨' : '🏠' }}
+          </span>
+          <span>{{ option.accommodation.name }}</span>
+          <span class="ml-2 text-yellow-500">★</span>
+          <span>{{ option.accommodation.rating }}</span>
+        </div>
+      </div>
+
+      <!-- Métriques -->
+      <div class="grid grid-cols-3 gap-4 border-t pt-4">
+        <div>
+          <span class="mr-2">💰</span>
+          {{ option.price }}€
+        </div>
+        <div>
+          <span class="mr-2">⏱️</span>
+          {{ option.duration }}
+        </div>
+        <div>
+          <span class="mr-2">🌱</span>
+          {{ option.carbon }} kgCO2
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+
