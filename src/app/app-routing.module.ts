@@ -18,7 +18,15 @@ const routes: Routes = [
   {
     path: 'travel-planner',
     loadChildren: () => import('./travel-planner/travel-planner.module').then( m => m.TravelPlannerPageModule)
+  },  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+
 ];
 
 @NgModule({
