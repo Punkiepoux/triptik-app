@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { IonicModule } from "@ionic/angular";
+import { CockpitPageRoutingModule } from "./cockpit-routing.module";
+import { CockpitPage } from "./cockpit.page";
 
-import { IonicModule } from '@ionic/angular';
-
-import { CockpitPageRoutingModule } from './cockpit-routing.module';
-
-import { CockpitPage } from './cockpit.page';
 
 @NgModule({
   imports: [
