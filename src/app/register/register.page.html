@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="text-center">Inscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+    <h1 class="text-2xl font-bold text-center mb-6">Créer un compte</h1>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-4">
+      <!-- Nom complet -->
+      <ion-item class="bg-gray-100 rounded-md">
+        <ion-label position="floating" class="text-gray-500">Nom complet</ion-label>
+        <ion-input formControlName="fullName"></ion-input>
+      </ion-item>
+      <p *ngIf="fullName?.invalid && fullName?.touched" class="text-sm text-red-500">
+        <span *ngIf="fullName?.errors?.['required']">Le nom complet est requis.</span>
+      </p>
+
+      <!-- Email -->
+      <ion-item class="bg-gray-100 rounded-md">
+        <ion-label position="floating" class="text-gray-500">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <p *ngIf="email?.invalid && email?.touched" class="text-sm text-red-500">
+        <span *ngIf="email?.errors?.['required']">L'email est requis.</span>
+        <span *ngIf="email?.errors?.['email']">Entrez un email valide.</span>
+      </p>
+
+      <!-- Mot de passe -->
+      <ion-item class="bg-gray-100 rounded-md">
+        <ion-label position="floating" class="text-gray-500">Mot de passe</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <p *ngIf="password?.invalid && password?.touched" class="text-sm text-red-500">
+        <span *ngIf="password?.errors?.['required']">Le mot de passe est requis.</span>
+        <span *ngIf="password?.errors?.['minlength']">
+          Le mot de passe doit contenir au moins 8 caractères.
+        </span>
+        <span *ngIf="password?.errors?.['pattern']">
+          Le mot de passe doit contenir :
+          <ul class="list-disc list-inside">
+            <li>Au moins une lettre majuscule</li>
+            <li>Au moins une lettre minuscule</li>
+            <li>Au moins un chiffre</li>
+            <li>Un caractère spécial parmi (&#64;, #, $, %, &, *, !)</li>
+          </ul>
+        </span>
+      </p>
+
+      <!-- Bouton S'inscrire -->
+      <ion-button expand="block" type="submit" [disabled]="registerForm.invalid">
+        S'inscrire
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
